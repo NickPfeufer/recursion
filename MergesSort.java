@@ -55,34 +55,42 @@ class MergesSort {
 
     public static void main(String[] args) {
         StopWatch watch = new StopWatch();
-        ArrayList<Integer> a = new ArrayList<Integer>();
-        ArrayList<Integer> b = randomArrayList(1000);
-        a.add(2);
-        a.add(7);
-        a.add(6);
-        a.add(1);
-        a.add(5);
-        a.add(3);
-        a.add(4);
-        System.out.println("Short unsorted list:");
-        prIntegerList(a);
-        System.out.println();
-        System.out.println("Sorted: ");
+        ArrayList<Integer> b = randomArrayList(100000);
+        System.out.println("100000 Long random unsorted list");
+        System.out.println("");
         watch.start();
-        prIntegerList(mergeSort(a));
+        mergeSort(b);
         watch.stop();
-        System.out.println("Sorted in : " + watch.time());
-        System.out.println();
-        System.out.println("Long random unsorted list:");
-        prIntegerList(b);
-        System.out.println();
-        System.out.println("Sorted");
+        System.out.println("Merge sorted in : " + watch.time());
+        int[] a = new int[b.size()];
+        for (int i = 0; i<a.length; i++) {
+            a[i] = b.get(i);
+        }
         watch.start();
-        ArrayList<Integer> d = mergeSort(b);
+        selcectionSort(a);
         watch.stop();
-        prIntegerList(d);
-        System.out.println("Sorted in : " + watch.time());
+        System.out.println("Selection sorted in : " + watch.time());
     }
+    public static int[] selcectionSort(int[] arr){
+        int storage;
+        int min;
+        for (int i = 0; i<arr.length; i++) {
+            storage = arr[i];
+            min = i;
+            for (int k = i; k<arr.length; k++) {
+                if(arr[k] < storage){
+                    storage = arr[k];
+                    min = k;
+                }
+            }
+            arr[min] = arr[i];
+            arr[i] = storage;           
+        }
+        return arr;
+    }
+
+
+
     public static void prIntegerList(ArrayList<Integer> a){
         for (Integer i : a) {
             System.out.println(i);
@@ -93,7 +101,7 @@ class MergesSort {
          Random r = new Random();
          ArrayList<Integer> a = new ArrayList<Integer>();
          for (int i = 0; i<lim; i++) {
-             a.add(r.nextInt(90));
+             a.add(r.nextInt(900));
          }
          return a;
     }
